@@ -1,0 +1,49 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "ae93a453518e5c49d2c5256ede7cfacc",
+    "packages": [
+        {
+            "name": "freedomtech-hosting/polydock-app",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "/home/bryan/Projects/polydockV2/polydock-app",
+                "reference": "0a3382bca84a311e916c21ec4c24c1e3e9fb8671"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FreedomtechHosting\\PolydockApp\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bryan Gruneberg",
+                    "email": "hello@bryangruneberg.com"
+                }
+            ],
+            "description": "Library for Polydock Apps",
+            "transport-options": {
+                "relative": false
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "freedomtech-hosting/polydock-app": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

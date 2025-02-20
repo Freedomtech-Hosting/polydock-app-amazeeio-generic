@@ -1,0 +1,27 @@
+{
+    "name": "freedomtech-hosting/polydock-app-d10-simple",
+    "description": "Polydock App - Drupal 10 Simple",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {  
+            "FreedomtechHosting\\PolydockAppD10Simple\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bryan Gruneberg",
+            "email": "hello@bryangruneberg.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "freedomtech-hosting/polydock-app": "@dev"
+    },
+    "repositories": [
+      {
+        "type": "path",
+        "url": "/home/bryan/Projects/polydockV2/polydock-app"
+      }
+    ]
+}
