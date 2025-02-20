@@ -1,13 +1,13 @@
 <?php
 
-namespace FreedomtechHosting\PolydockAppD10Simple;
+namespace FreedomtechHosting\PolydockAppAmazeeioGeneric;
 
 use FreedomtechHosting\PolydockApp\PolydockAppBase;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
 
-class PolydockAppD10Simple extends PolydockAppBase
+class PolydockAppAmazeeioGeneric extends PolydockAppBase
 {
     /**
      * Handles pre-creation tasks for an app instance.

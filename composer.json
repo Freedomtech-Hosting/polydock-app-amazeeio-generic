@@ -1,11 +1,11 @@
 {
-    "name": "freedomtech-hosting/polydock-app-d10-simple",
-    "description": "Polydock App - Drupal 10 Simple",
+    "name": "freedomtech-hosting/polydock-app-amazeeio-generic",
+    "description": "Polydock App - amazee.io Generic",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {  
-            "FreedomtechHosting\\PolydockAppD10Simple\\": "src/"
+            "FreedomtechHosting\\PolydockAppAmazeeioGeneric\\": "src/"
         }
     },
     "authors": [
