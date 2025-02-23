@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae93a453518e5c49d2c5256ede7cfacc",
+    "content-hash": "6190330132d05d888dd4fb7cf4407047",
     "packages": [
         {
             "name": "freedomtech-hosting/polydock-app",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "/home/bryan/Projects/polydockV2/polydock-app",
-                "reference": "0a3382bca84a311e916c21ec4c24c1e3e9fb8671"
+                "reference": "31d20827e934fd84d0924473d356dc931d34286c"
             },
             "type": "library",
             "autoload": {

@@ -7,8 +7,20 @@ use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
 
-class PolydockAppAmazeeioGeneric extends PolydockAppBase
+class PolydockApp extends PolydockAppBase
 {
+    public static string $version = '0.0.1';
+
+    /**
+     * Get the version of the app
+     * 
+     * @return string
+     */
+    public static function getAppVersion(): string
+    {
+        return self::$version;
+    }
+
     /**
      * Handles pre-creation tasks for an app instance.
      * 
