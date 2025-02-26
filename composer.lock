@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "429c6f1f91b5697bd7bde737cc43420a",
+    "content-hash": "b87a48dabac9dbd000778c0626767a0d",
     "packages": [
         {
             "name": "freedomtech-hosting/ft-lagoon-php",
-            "version": "dev-main",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Freedomtech-Hosting/ft-lagoon-php.git",
+                "reference": "d171a054834967d4cd94fa8975eee15584ef8b55"
+            },
             "dist": {
-                "type": "path",
-                "url": "/home/bryan/Projects/FT/ft-lagoon-php",
-                "reference": "f5ee4e33851de481f719b83e707b67b4949e8f4f"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/ft-lagoon-php/zipball/d171a054834967d4cd94fa8975eee15584ef8b55",
+                "reference": "d171a054834967d4cd94fa8975eee15584ef8b55",
+                "shasum": ""
             },
             "require": {
                 "softonic/graphql-client": "^3.0",
@@ -25,6 +31,7 @@
                     "FreedomtechHosting\\FtLagoonPhp\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -35,17 +42,25 @@
                 }
             ],
             "description": "The Freedom Tech Lagoon PHP library",
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/Freedomtech-Hosting/ft-lagoon-php/issues",
+                "source": "https://github.com/Freedomtech-Hosting/ft-lagoon-php/tree/v0.0.2"
+            },
+            "time": "2025-02-23T23:16:50+00:00"
         },
         {
             "name": "freedomtech-hosting/polydock-app",
-            "version": "dev-main",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Freedomtech-Hosting/polydock-app.git",
+                "reference": "57c9409155a085a975285ce4f4c4521c13f28527"
+            },
             "dist": {
-                "type": "path",
-                "url": "/home/bryan/Projects/polydockV2/polydock-app",
-                "reference": "07858fdd867f45e34c29ae864f929f9e56b7c18e"
+                "type": "zip",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-app/zipball/57c9409155a085a975285ce4f4c4521c13f28527",
+                "reference": "57c9409155a085a975285ce4f4c4521c13f28527",
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -53,6 +68,7 @@
                     "FreedomtechHosting\\PolydockApp\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -63,9 +79,11 @@
                 }
             ],
             "description": "Library for Polydock Apps",
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/Freedomtech-Hosting/polydock-app/issues",
+                "source": "https://github.com/Freedomtech-Hosting/polydock-app/tree/v0.0.1"
+            },
+            "time": "2025-02-23T23:20:19+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1636,10 +1654,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "freedomtech-hosting/polydock-app": 20,
-        "freedomtech-hosting/ft-lagoon-php": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

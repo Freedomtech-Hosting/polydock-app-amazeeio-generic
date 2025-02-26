@@ -16,17 +16,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "freedomtech-hosting/polydock-app": "@dev",
-        "freedomtech-hosting/ft-lagoon-php": "@dev"
-    },
-    "repositories": [
-      {
-        "type": "path",
-        "url": "/home/bryan/Projects/polydockV2/polydock-app"
-      },
-      {
-        "type": "path",
-        "url": "/home/bryan/Projects/FT/ft-lagoon-php"
-      }
-    ]
+        "freedomtech-hosting/polydock-app": "^0.0.1",
+        "freedomtech-hosting/ft-lagoon-php": "^0.0.2"
+    }
 }
