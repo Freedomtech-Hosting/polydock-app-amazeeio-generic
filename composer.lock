@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37f02eb75d8dc1bf2f9e3207e220cf84",
+    "content-hash": "9f1eb280cb301391ef63210e57b0fbdb",
     "packages": [
         {
             "name": "freedomtech-hosting/ft-lagoon-php",
@@ -50,16 +50,16 @@
         },
         {
             "name": "freedomtech-hosting/polydock-app",
-            "version": "v0.0.8",
+            "version": "v0.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freedomtech-Hosting/polydock-app.git",
-                "reference": "1a5891aff040efd22c1935a7f3592c2014610f9a"
+                "reference": "5494c3d78fdf3f1b9628741bc0c13e8f9fced4d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-app/zipball/1a5891aff040efd22c1935a7f3592c2014610f9a",
-                "reference": "1a5891aff040efd22c1935a7f3592c2014610f9a",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-app/zipball/5494c3d78fdf3f1b9628741bc0c13e8f9fced4d7",
+                "reference": "5494c3d78fdf3f1b9628741bc0c13e8f9fced4d7",
                 "shasum": ""
             },
             "type": "library",
@@ -81,9 +81,9 @@
             "description": "Library for Polydock Apps",
             "support": {
                 "issues": "https://github.com/Freedomtech-Hosting/polydock-app/issues",
-                "source": "https://github.com/Freedomtech-Hosting/polydock-app/tree/v0.0.8"
+                "source": "https://github.com/Freedomtech-Hosting/polydock-app/tree/v0.0.9"
             },
-            "time": "2025-03-08T17:52:50+00:00"
+            "time": "2025-03-08T18:12:45+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
