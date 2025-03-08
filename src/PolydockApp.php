@@ -7,8 +7,12 @@ use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
 use FreedomtechHosting\FtLagoonPhp\Client as LagoonClient;
+use FreedomtechHosting\PolydockApp\Enums\PolydockAppVariableDefinitionValueFromType;
 use FreedomtechHosting\PolydockApp\PolydockEngineInterface;
 use FreedomtechHosting\PolydockApp\PolydockServiceProviderInterface;
+use FreedomtechHosting\PolydockApp\PolydockAppVariableDefinition;
+use FreedomtechHosting\PolydockApp\PolydockAppVariableDefinitionBase;
+use FreedomtechHosting\PolydockApp\PolydockAppVariableDefinitionInterface;
 
 class PolydockApp extends PolydockAppBase
 {
@@ -31,6 +35,23 @@ class PolydockApp extends PolydockAppBase
      * @var PolydockServiceProviderInterface
      */
     protected PolydockServiceProviderInterface $lagoonClientProvider;
+
+    /**
+     * Get the default variable definitions for this app specifically
+     * 
+     * @return array<PolydockAppVariableDefinitionInterface> 
+     */
+    public static function getAppDefaultVariableDefinitions(): array
+    {
+        return [
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-git'),
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-branch'),
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-region-id'),
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-organization-id'),
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-project-prefix'),
+            new PolydockAppVariableDefinitionBase('lagoon-project-name'),
+        ];
+    }
 
     /**
      * Get the version of the app
