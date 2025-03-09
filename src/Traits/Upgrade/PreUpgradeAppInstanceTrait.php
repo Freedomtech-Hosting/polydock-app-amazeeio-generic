@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Upgrade;
+namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade;
 
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;

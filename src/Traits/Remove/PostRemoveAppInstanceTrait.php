@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Remove;
+namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove;
 
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;

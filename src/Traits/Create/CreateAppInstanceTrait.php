@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Create;
+namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Create;
 
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
