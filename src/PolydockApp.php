@@ -9,6 +9,7 @@ use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Create\PostCreateAppIns
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\PreDeployAppInstanceTrait;
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\DeployAppInstanceTrait;
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\PostDeployAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\PollDeployProgressAppInstanceTrait;
 
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\PreRemoveAppInstanceTrait;
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\RemoveAppInstanceTrait;
@@ -17,6 +18,9 @@ use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\PostRemoveAppIns
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PreUpgradeAppInstanceTrait;
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\UpgradeAppInstanceTrait;
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PostUpgradeAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PollUpgradeProgressAppInstanceTrait;   
+
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Health\PollHealthProgressAppInstanceTrait;
 
 use FreedomtechHosting\PolydockApp\PolydockAppBase;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
@@ -39,7 +43,7 @@ class PolydockApp extends PolydockAppBase
     use PreDeployAppInstanceTrait;
     use DeployAppInstanceTrait;
     use PostDeployAppInstanceTrait;
-
+    use PollDeployProgressAppInstanceTrait;
     // Remove
     use PreRemoveAppInstanceTrait;
     use RemoveAppInstanceTrait;
@@ -49,6 +53,9 @@ class PolydockApp extends PolydockAppBase
     use PreUpgradeAppInstanceTrait;
     use UpgradeAppInstanceTrait;
     use PostUpgradeAppInstanceTrait;
+    use PollUpgradeProgressAppInstanceTrait;
+    // Health
+    use PollHealthProgressAppInstanceTrait;
 
     /**
      * @var string
