@@ -610,8 +610,6 @@ class PolydockApp extends PolydockAppBase
             $this->debug('Lagoon project name and id verified: ' . $projectName . ' and ' . $projectId, ['class' => self::class, 'location' => 'preRemoveAppInstance', 'projectName' => $projectName, 'projectId' => $projectId]);
         }
 
-
-
         $appInstance->setStatus(PolydockAppInstanceStatus::PRE_REMOVE_COMPLETED, "Pre-remove completed");
         return $appInstance;
     }
@@ -699,6 +697,134 @@ class PolydockApp extends PolydockAppBase
         }
 
         $appInstance->setStatus(PolydockAppInstanceStatus::POST_REMOVE_COMPLETED, "Post-remove completed");
+        return $appInstance;
+    }
+
+    /**
+     * Handles pre-upgrade tasks for an app instance.
+     * 
+     * This method is called before upgrading the app instance. It validates the instance
+     * is in the correct status, sets it to running, executes pre-upgrade logic,
+     * and marks it as completed.
+     *
+     * @param PolydockAppInstanceInterface $appInstance The app instance to process
+     * @return PolydockAppInstanceInterface The processed app instance
+     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_PRE_UPGRADE status
+     */
+    public function preUpgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
+    {
+        $this->setLagoonClientFromAppInstance($appInstance);
+
+        if($appInstance->getStatus() !== PolydockAppInstanceStatus::PENDING_PRE_UPGRADE) {
+            throw new PolydockAppInstanceStatusFlowException('App instance is not in the correct status to pre-upgrade');
+        }
+
+        $this->info('Pre-upgrading app instance', ['class' => self::class, 'location' => 'preUpgradeAppInstance']);
+        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_RUNNING, "Starting pre-upgrade");
+        
+        $ping = $this->pingLagoonAPI();
+        if(!$ping) { 
+            $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_FAILED, "Lagoon API ping failed");
+            return $appInstance;
+        } else if($this->lagoonClient->getDebug()) {
+            $this->debug('Lagoon API ping successful', ['class' => self::class, 'location' => 'preUpgradeAppInstance']);
+        }
+
+        $projectName = $appInstance->getKeyValue("lagoon-project-name");
+        $projectId = $appInstance->getKeyValue("lagoon-project-id");
+        if(!$this->verifyLagoonProjectAndIdAreAvailable($appInstance, 'preUpgradeAppInstance')) {
+            $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_FAILED, "Lagoon project name or id not available");
+            return $appInstance;
+        } else if($this->lagoonClient->getDebug()) {
+            $this->debug('Lagoon project name and id verified: ' . $projectName . ' and ' . $projectId, ['class' => self::class, 'location' => 'preUpgradeAppInstance', 'projectName' => $projectName, 'projectId' => $projectId]);
+        }
+
+        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_COMPLETED, "Pre-upgrade completed");
+        return $appInstance;
+    }
+
+    /**
+     * Handles upgrade tasks for an app instance.
+     * 
+     * This method is called when upgrading the app instance. It validates the instance
+     * is in the correct status, sets it to running, executes upgrade logic,
+     * and marks it as completed.
+     *
+     * @param PolydockAppInstanceInterface $appInstance The app instance to process
+     * @return PolydockAppInstanceInterface The processed app instance
+     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_UPGRADE status
+     */
+    public function upgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
+    {
+        $this->setLagoonClientFromAppInstance($appInstance);
+
+        if($appInstance->getStatus() !== PolydockAppInstanceStatus::PENDING_UPGRADE) {
+            throw new PolydockAppInstanceStatusFlowException('App instance is not in the correct status to upgrade');
+        }
+
+        $this->info('Upgrading app instance', ['class' => self::class, 'location' => 'upgradeAppInstance']);
+        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_RUNNING, "Starting upgrade");
+
+        $ping = $this->pingLagoonAPI();
+        if(!$ping) { 
+            $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_FAILED, "Lagoon API ping failed");
+            return $appInstance;
+        } else if($this->lagoonClient->getDebug()) {
+            $this->debug('Lagoon API ping successful', ['class' => self::class, 'location' => 'upgradeAppInstance']);
+        }
+
+        try {
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_VERSION", self::getAppVersion(), "GLOBAL");
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+            $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_FAILED, $e->getMessage());
+            return $appInstance;
+        }
+
+        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_COMPLETED, "Upgrade completed");
+        return $appInstance;
+    }
+
+    /**
+     * Handles post-upgrade tasks for an app instance.
+     * 
+     * This method is called after upgrading the app instance. It validates the instance
+     * is in the correct status, sets it to running, executes post-upgrade logic,
+     * and marks it as completed.
+     *
+     * @param PolydockAppInstanceInterface $appInstance The app instance to process
+     * @return PolydockAppInstanceInterface The processed app instance
+     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_UPGRADE status
+     */
+    public function postUpgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
+    {
+        $this->setLagoonClientFromAppInstance($appInstance);
+
+        if($appInstance->getStatus() !== PolydockAppInstanceStatus::PENDING_POST_UPGRADE) {
+            throw new PolydockAppInstanceStatusFlowException('App instance is not in the correct status to post-upgrade');
+        }
+
+        $this->info('Post-upgrading app instance', ['class' => self::class, 'location' => 'postUpgradeAppInstance']);
+        $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_RUNNING, "Starting post-upgrade");
+
+        $ping = $this->pingLagoonAPI();
+        if(!$ping) { 
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_FAILED, "Lagoon API ping failed");
+            return $appInstance;
+        } else if($this->lagoonClient->getDebug()) {
+            $this->debug('Lagoon API ping successful', ['class' => self::class, 'location' => 'postUpgradeAppInstance']);
+        }
+
+        $projectName = $appInstance->getKeyValue("lagoon-project-name");
+        $projectId = $appInstance->getKeyValue("lagoon-project-id");
+        if(!$this->verifyLagoonProjectAndIdAreAvailable($appInstance, 'postUpgradeAppInstance')) {
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_FAILED, "Lagoon project name or id not available");
+            return $appInstance;
+        } else if($this->lagoonClient->getDebug()) {
+            $this->debug('Lagoon project name and id verified: ' . $projectName . ' and ' . $projectId, ['class' => self::class, 'location' => 'postUpgradeAppInstance', 'projectName' => $projectName, 'projectId' => $projectId]);
+        }
+
+        $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_COMPLETED, "Post-upgrade completed");
         return $appInstance;
     }
 }
