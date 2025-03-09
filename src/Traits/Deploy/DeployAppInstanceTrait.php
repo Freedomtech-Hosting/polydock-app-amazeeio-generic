@@ -49,7 +49,7 @@ trait DeployAppInstanceTrait {
             PolydockAppInstanceStatus::DEPLOY_RUNNING->getStatusMessage()
         );
 
-        $this->warning("TODO: Implement deploy logic", $logContext);
+        $appInstance->warning("TODO: Implement deploy logic", $logContext);
 
         $this->info($functionName . ': completed', $logContext);
         $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_COMPLETED, "Deploy completed");

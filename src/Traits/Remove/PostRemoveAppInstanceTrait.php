@@ -49,7 +49,7 @@ trait PostRemoveAppInstanceTrait {
             PolydockAppInstanceStatus::POST_REMOVE_RUNNING->getStatusMessage()
         );
 
-        $this->appInstance->warning("TODO: Implement post-remove logic", $logContext);
+        $appInstance->warning("TODO: Implement post-remove logic", $logContext);
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_REMOVED_DATE", date('Y-m-d'), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_REMOVED_TIME", date('H:i:s'), "GLOBAL");

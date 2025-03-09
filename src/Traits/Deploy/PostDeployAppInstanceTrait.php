@@ -49,7 +49,7 @@ trait PostDeployAppInstanceTrait {
             PolydockAppInstanceStatus::POST_DEPLOY_RUNNING->getStatusMessage()
         );
 
-        $this->appInstance->warning("TODO: Implement post-deploy logic", $logContext);
+        $appInstance->warning("TODO: Implement post-deploy logic", $logContext);
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_DATE", date('Y-m-d'), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
