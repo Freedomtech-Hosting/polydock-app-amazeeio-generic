@@ -16,7 +16,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "freedomtech-hosting/polydock-app": "^0.0.13",
+        "freedomtech-hosting/polydock-app": "^0.0.14",
         "freedomtech-hosting/ft-lagoon-php": "^0.0.2"
     }
 }
