@@ -42,17 +42,38 @@ trait DeployAppInstanceTrait {
         );
 
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
-
-        $this->info($functionName . ': starting for project: ' . $projectName, $logContext);
+        $deployEnvironment = $appInstance->getKeyValue("lagoon-deploy-branch");
+        $logContext['projectName'] = $projectName;
+        $logContext['deployEnvironment'] = $deployEnvironment;
+        
+        $this->info($functionName . ': starting for project: ' . $projectName . ' and environment: ' . $deployEnvironment, $logContext);
         $appInstance->setStatus(
             PolydockAppInstanceStatus::DEPLOY_RUNNING, 
             PolydockAppInstanceStatus::DEPLOY_RUNNING->getStatusMessage()
         );
 
-        $appInstance->warning("TODO: Implement deploy logic", $logContext);
+        $createdDeployment = $this->lagoonClient->deployProjectEnvironmentByName(
+            $projectName, 
+            $deployEnvironment
+        );
+
+        if (isset($createdDeployment['error'])) {
+            $this->error($createdDeployment['error'][0]['message'], $logContext);
+            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => $createdDeployment['error']]);
+            return $appInstance;
+        }
+
+        $latestDeploymentName = $createdDeployment['deployEnvironmentBranch'] ?? null;
+
+        if(empty($latestDeploymentName)) {
+            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => "Missing deployment name"]);
+            return $appInstance;
+        }
+
+        $appInstance->storeKeyValue("lagoon-latest-deployment-name", $latestDeploymentName);
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_RUNNING, "Deploy completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_RUNNING, "Deploy running");
         return $appInstance;
     }
 }
