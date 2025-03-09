@@ -339,10 +339,17 @@ class PolydockApp extends PolydockAppBase
     {
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
         $projectId = $appInstance->getKeyValue("lagoon-project-id");
+        $logContext = $this->getLogContext('addOrUpdateLagoonProjectVariable');
+        $logContext['projectName'] = $projectName;
+        $logContext['projectId'] = $projectId;
+        $logContext['variableName'] = $variableName;
+        $logContext['variableValue'] = $variableValue;
+        $logContext['variableScope'] = $variableScope;
         
         $variable = $this->lagoonClient->addOrUpdateScopedVariableForProject($projectName, $variableName, $variableValue, $variableScope);
         
         if(! isset($variable['addOrUpdateEnvVariableByName']['id'])) {
+            $this->error('Failed to add or update ' . $variableName . ' variable', $logContext);
             throw new \Exception('Failed to add or update ' . $variableName . ' variable');
         }
 
