@@ -241,6 +241,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_PRE_CREATE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function preCreateAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface 
     {
@@ -290,6 +291,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_CREATE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function createAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -360,7 +362,8 @@ class PolydockApp extends PolydockAppBase
      *
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
-     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_CREATE status
+     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_CREATE status      
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function postCreateAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -440,6 +443,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_PRE_DEPLOY status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function preDeployAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -488,6 +492,7 @@ class PolydockApp extends PolydockAppBase
       * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_DEPLOY status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function deployAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -537,6 +542,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_DEPLOY status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function postDeployAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -581,6 +587,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_PRE_REMOVE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function preRemoveAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -624,6 +631,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_REMOVE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function removeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -667,6 +675,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_REMOVE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function postRemoveAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {   
@@ -710,6 +719,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_PRE_UPGRADE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function preUpgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -753,6 +763,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_UPGRADE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function upgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
@@ -795,6 +806,7 @@ class PolydockApp extends PolydockAppBase
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
      * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_UPGRADE status
+     * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
     public function postUpgradeAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface
     {
