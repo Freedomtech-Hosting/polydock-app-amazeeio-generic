@@ -50,6 +50,14 @@ trait PostDeployAppInstanceTrait {
         );
 
         $this->Log::warning("TODO: Implement post-deploy logic", $logContext);
+        try {
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_DATE", date('Y-m-d'), "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() );
+            return $appInstance;
+        }
 
         $this->info($functionName . ': completed', $logContext);
         $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_COMPLETED, "Post-deploy completed");
