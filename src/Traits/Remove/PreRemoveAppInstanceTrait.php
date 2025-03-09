@@ -23,6 +23,7 @@ trait PreRemoveAppInstanceTrait {
     {
         $functionName = __FUNCTION__;
         $logContext = $this->getLogContext($functionName);
+        $testLagoonPing = true;
         $validateLagoonValues = true;
         $validateLagoonProjectName = true;
         $validateLagoonProjectId = true;
@@ -33,7 +34,8 @@ trait PreRemoveAppInstanceTrait {
         $this->validateAppInstanceStatusIsExpectedAndConfigureLagoonClientAndVerifyLagoonValues(
             $appInstance,
             PolydockAppInstanceStatus::PENDING_PRE_REMOVE, 
-            true,
+            $logContext,
+            $testLagoonPing,
             $validateLagoonValues,
             $validateLagoonProjectName,
             $validateLagoonProjectId

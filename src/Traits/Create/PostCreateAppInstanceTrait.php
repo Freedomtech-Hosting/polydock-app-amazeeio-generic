@@ -23,6 +23,7 @@ trait PostCreateAppInstanceTrait {
     {
         $functionName = __FUNCTION__;
         $logContext = $this->getLogContext($functionName);
+        $testLagoonPing = true;
         $validateLagoonValues = true;
         $validateLagoonProjectName = true;
         $validateLagoonProjectId = true;
@@ -33,7 +34,8 @@ trait PostCreateAppInstanceTrait {
         $this->validateAppInstanceStatusIsExpectedAndConfigureLagoonClientAndVerifyLagoonValues(
             $appInstance,
             PolydockAppInstanceStatus::PENDING_POST_CREATE, 
-            true,
+            $logContext,
+            $testLagoonPing,
             $validateLagoonValues,
             $validateLagoonProjectName,
             $validateLagoonProjectId

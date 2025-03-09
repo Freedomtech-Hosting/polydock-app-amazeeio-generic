@@ -22,7 +22,8 @@ trait PostRemoveAppInstanceTrait {
     public function postRemoveAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface 
     {
         $functionName = __FUNCTION__;
-        $logContext = $this->getLogContext($functionName);
+        $logContext = $this->getLogContext($functionName);  
+        $testLagoonPing = true;
         $validateLagoonValues = true;
         $validateLagoonProjectName = true;
         $validateLagoonProjectId = true;
@@ -33,7 +34,8 @@ trait PostRemoveAppInstanceTrait {
         $this->validateAppInstanceStatusIsExpectedAndConfigureLagoonClientAndVerifyLagoonValues(
             $appInstance,
             PolydockAppInstanceStatus::PENDING_POST_REMOVE, 
-            true,
+            $logContext,
+            $testLagoonPing,
             $validateLagoonValues,
             $validateLagoonProjectName,
             $validateLagoonProjectId
