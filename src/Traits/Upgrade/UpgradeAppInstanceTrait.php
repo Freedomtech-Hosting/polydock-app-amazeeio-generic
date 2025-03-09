@@ -65,7 +65,7 @@ trait UpgradeAppInstanceTrait {
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_COMPLETED, "Upgrade completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_RUNNING, "Upgrade completed");
         return $appInstance;
     }
 }
