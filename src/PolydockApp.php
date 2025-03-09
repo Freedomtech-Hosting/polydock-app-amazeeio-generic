@@ -2,21 +2,21 @@
 
 namespace FreedomtechHosting\PolydockAppAmazeeioGeneric;
 
-use App\Traits\Create\PreCreateAppInstanceTrait;
-use App\Traits\Create\CreateAppInstanceTrait;
-use App\Traits\Create\PostCreateAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Create\PreCreateAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Create\CreateAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Create\PostCreateAppInstanceTrait;
 
-use App\Traits\Deploy\PreDeployAppInstanceTrait;
-use App\Traits\Deploy\DeployAppInstanceTrait;
-use App\Traits\Deploy\PostDeployAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\PreDeployAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\DeployAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy\PostDeployAppInstanceTrait;
 
-use App\Traits\Remove\PreRemoveAppInstanceTrait;
-use App\Traits\Remove\RemoveAppInstanceTrait;
-use App\Traits\Remove\PostRemoveAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\PreRemoveAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\RemoveAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Remove\PostRemoveAppInstanceTrait;
 
-use App\Traits\Upgrade\PreUpgradeAppInstanceTrait;
-use App\Traits\Upgrade\UpgradeAppInstanceTrait;
-use App\Traits\Upgrade\PostUpgradeAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PreUpgradeAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\UpgradeAppInstanceTrait;
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PostUpgradeAppInstanceTrait;
 
 use FreedomtechHosting\PolydockApp\PolydockAppBase;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
