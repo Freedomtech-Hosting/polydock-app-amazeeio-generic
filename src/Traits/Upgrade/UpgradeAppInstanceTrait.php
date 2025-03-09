@@ -49,7 +49,7 @@ trait UpgradeAppInstanceTrait {
             PolydockAppInstanceStatus::UPGRADE_RUNNING->getStatusMessage()
         );
 
-        $this->Log::warning("TODO: Implement upgrade logic", $logContext);
+        $this->appInstance->warning("TODO: Implement upgrade logic", $logContext);
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_TYPE", $appInstance->getAppType(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_VERSION", self::getAppVersion(), "GLOBAL");

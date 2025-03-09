@@ -49,7 +49,7 @@ trait PostUpgradeAppInstanceTrait {
             PolydockAppInstanceStatus::POST_UPGRADE_RUNNING->getStatusMessage()
         );
 
-        $this->Log::warning("TODO: Implement post-upgrade logic", $logContext);
+        $this->appInstance->warning("TODO: Implement post-upgrade logic", $logContext);
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_UPGRADED_DATE", date('Y-m-d'), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_UPGRADED_TIME", date('H:i:s'), "GLOBAL");

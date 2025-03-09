@@ -49,7 +49,7 @@ trait RemoveAppInstanceTrait {
             PolydockAppInstanceStatus::REMOVE_RUNNING->getStatusMessage()
         );
 
-        $this->Log::warning("TODO: Implement remove logic", $logContext);
+        $this->appInstance->warning("TODO: Implement remove logic", $logContext);
 
         $this->info($functionName . ': completed', $logContext);
         $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_COMPLETED, "Remove completed");
