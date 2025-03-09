@@ -55,7 +55,7 @@ trait PostDeployAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, $e->getMessage() );
             return $appInstance;
         }
 

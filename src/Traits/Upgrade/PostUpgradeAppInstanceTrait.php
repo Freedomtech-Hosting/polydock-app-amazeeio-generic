@@ -55,7 +55,7 @@ trait PostUpgradeAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_UPGRADED_TIME", date('H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_FAILED, $e->getMessage() );
             return $appInstance;
         }
 
