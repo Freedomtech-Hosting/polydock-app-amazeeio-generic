@@ -49,15 +49,16 @@ trait CreateAppInstanceTrait {
             PolydockAppInstanceStatus::CREATE_RUNNING->getStatusMessage()
         );
 
+        $addOrgOwnerToProject = true;
         $createdProjectData = $this->lagoonClient->createLagoonProjectInOrganization(
             $projectName, 
             $appInstance->getKeyValue("lagoon-deploy-git"),
             $appInstance->getKeyValue("lagoon-deploy-branch"),
             $appInstance->getKeyValue("lagoon-deploy-branch"),
             $appInstance->getKeyValue("lagoon-deploy-region-id"),
-            null,
+            $appInstance->getKeyValue("lagoon-deploy-private-key"),
             $appInstance->getKeyValue("lagoon-deploy-organization-id"),
-            true
+            $addOrgOwnerToProject
         );
 
         if (isset($createdProjectData['error'])) {

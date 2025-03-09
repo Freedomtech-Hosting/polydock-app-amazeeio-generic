@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d567d3e72926572a423e8816b311fef0",
+    "content-hash": "f3a46f47ac09a3d031b684e5d3418d43",
     "packages": [
         {
             "name": "freedomtech-hosting/ft-lagoon-php",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freedomtech-Hosting/ft-lagoon-php.git",
-                "reference": "d171a054834967d4cd94fa8975eee15584ef8b55"
+                "reference": "fd2fdd709444c5df7cd032678d5557faa38a1edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freedomtech-Hosting/ft-lagoon-php/zipball/d171a054834967d4cd94fa8975eee15584ef8b55",
-                "reference": "d171a054834967d4cd94fa8975eee15584ef8b55",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/ft-lagoon-php/zipball/fd2fdd709444c5df7cd032678d5557faa38a1edf",
+                "reference": "fd2fdd709444c5df7cd032678d5557faa38a1edf",
                 "shasum": ""
             },
             "require": {
@@ -44,9 +44,9 @@
             "description": "The Freedom Tech Lagoon PHP library",
             "support": {
                 "issues": "https://github.com/Freedomtech-Hosting/ft-lagoon-php/issues",
-                "source": "https://github.com/Freedomtech-Hosting/ft-lagoon-php/tree/v0.0.2"
+                "source": "https://github.com/Freedomtech-Hosting/ft-lagoon-php/tree/v0.0.3"
             },
-            "time": "2025-02-23T23:16:50+00:00"
+            "time": "2025-03-09T22:04:05+00:00"
         },
         {
             "name": "freedomtech-hosting/polydock-app",
