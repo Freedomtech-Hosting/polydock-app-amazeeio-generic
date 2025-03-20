@@ -6,7 +6,6 @@ use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
 use FreedomtechHosting\PolydockAmazeeAIBackendClient\Client;
 
-
 trait UsesAmazeeAiBackend
 {
     /**
@@ -38,6 +37,11 @@ trait UsesAmazeeAiBackend
 
         if(!($this->amazeeAiBackendClient instanceof Client)) {
             throw new PolydockAppInstanceStatusFlowException('Amazee AI backend client is not an instance of ' . Client::class);
+        }
+
+        $region = $appInstance->getKeyValue('amazee-ai-backend-region-id');
+        if(!$region) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend region is required to be set in the app instance');
         }
 
         if(!$this->pingAmazeeAiBackend()) {
@@ -100,5 +104,75 @@ trait UsesAmazeeAiBackend
         }
 
         return false;
+    }
+
+    public function getPrivateAICredentialsFromBackend(PolydockAppInstanceInterface $appInstance): array
+    {
+        $logContext = $this->getLogContext(__FUNCTION__);
+
+        $projectName = $appInstance->getKeyValue('lagoon-project-name');
+        $region = $appInstance->getKeyValue('amazee-ai-backend-region-id');
+        if(!$region) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend region is required to be set in the app instance');
+        }
+
+        $amazeeAiBackendUserEmail = $appInstance->getKeyValue('amazee-ai-backend-user-email');
+        if(!$amazeeAiBackendUserEmail) {
+            $amazeeAiBackendUserEmail = $projectName . '@autogen.null';
+        }
+
+
+        $logContext['ai_backend_region'] = $region;
+        $logContext['ai_backend_user_email'] = $amazeeAiBackendUserEmail;
+        
+        $backendUserList = $this->amazeeAiBackendClient->searchUsers($amazeeAiBackendUserEmail);
+
+        if(count($backendUserList) > 1) {
+            $backendUser = $backendUserList[0];
+        } else {
+            $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid().uniqid());
+        }
+
+        if(!$backendUser) {
+            $this->error('Failed to create user in amazeeAI backend', $logContext);
+            throw new PolydockAppInstanceStatusFlowException('Failed to create user in amazeeAI backend');
+        }
+
+        $backendUserId = $backendUser['id'];
+        $backendCredentialName = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $projectName))) . '-proj-creds';
+
+        $logContext['ai_backend_user_id'] = $backendUserId;
+        $logContext['ai_backend_credential_name'] = $backendCredentialName;
+
+        $this->info('Getting private AI credentials from amazeeAI backend', $logContext);
+
+        $response = $this->amazeeAiBackendClient->createPrivateAIKeys($region, $backendCredentialName, $backendUserId);
+
+        if(!$response || !is_array($response)) {
+            $this->error('No private AI credentials found', $logContext);
+            throw new PolydockAppInstanceStatusFlowException('No private AI credentials found');
+        }
+
+        $requiredKeys = [
+            'name',
+            'region',
+            'database_name',
+            'database_host',
+            'database_username',
+            'database_password',
+            'litellm_token',
+            'litellm_api_url',
+        ];
+
+        foreach($requiredKeys as $key) {
+            if(!isset($response[$key])) {
+                $this->error('Missing required credential key: ' . $key, $logContext + $response);
+                throw new PolydockAppInstanceStatusFlowException('Missing required credential key: ' . $key);
+            }
+        }
+
+        $this->info('Private AI credentials found', $logContext + $response);
+
+        return $response;
     }
 }

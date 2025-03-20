@@ -65,18 +65,21 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_WEBSITE", $appInstance->getApp()->getAppWebsite(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_SUPPORT_EMAIL", $appInstance->getApp()->getAppSupportEmail(), "GLOBAL");
 
-
         if($this->getRequiresAiInfrastructure()) {
-            $this->info($functionName . ': app requires AI infrastructure', $logContext);
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $appInstance->getKeyValue('amazee-ai-backend-region-id'), "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", "amazeeio-ai-demo.cluster-something.eu-central-2.rds.amazonaws.com", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", "db_something", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", "user_someone", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", "somepass", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOST_NAME", "litellm.amazeeai-something.amazeeio.something", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", "https://litellm.amazeeai-something.amazeeio.something", "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_TOKEN", "sk-somekeysomekey", "GLOBAL");
+            $privateAiCredentials = $this->getPrivateAICredentialsFromBackend($appInstance);
+            $llmApiUrl = $privateAiCredentials['litellm_api_url'];
+            $llmApiHostname = preg_replace('#^https?://|/.*$#', '', $llmApiUrl);
 
+            $this->info($functionName . ': app requires AI infrastructure', $logContext);
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $privateAiCredentials['region'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", $privateAiCredentials['database_host'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", $privateAiCredentials['database_name'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", $privateAiCredentials['database_username'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", $privateAiCredentials['database_password'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", $privateAiCredentials['litellm_api_url'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOSTNAME", $llmApiHostname, "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOST_NAME", $privateAiCredentials['litellm_api_url'], "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_TOKEN", $privateAiCredentials['litellm_token'], "GLOBAL");
         }
 
         } catch (\Exception $e) {
