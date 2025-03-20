@@ -66,7 +66,7 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_SUPPORT_EMAIL", $appInstance->getApp()->getAppSupportEmail(), "GLOBAL");
 
 
-        if($this->app->getRequiresAiInfrastructure()) {
+        if($this->getRequiresAiInfrastructure()) {
             $this->info($functionName . ': app requires AI infrastructure', $logContext);
             $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $appInstance->getKeyValue('amazee-ai-backend-region-id'), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", "amazeeio-ai-demo.cluster-something.eu-central-2.rds.amazonaws.com", "GLOBAL");

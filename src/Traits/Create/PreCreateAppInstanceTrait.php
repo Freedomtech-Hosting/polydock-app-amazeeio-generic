@@ -43,7 +43,7 @@ trait PreCreateAppInstanceTrait {
 
 
         // While we don't use this here, lets make sure we have it available for later 
-        if($this->app->getRequiresAiInfrastructure()) {
+        if($this->getRequiresAiInfrastructure()) {
             // Throws PolydockAppInstanceStatusFlowException
             $this->setAmazeeAiBackendClientFromAppInstance($appInstance);
         }
