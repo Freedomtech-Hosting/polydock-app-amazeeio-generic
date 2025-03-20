@@ -111,6 +111,16 @@ trait UsesAmazeeAiBackend
     {
         $logContext = $this->getLogContext(__FUNCTION__);
 
+        if(!$this->checkAmazeeAiBackendAuth()) {
+            $this->error('Amazee AI backend is not authorized', $logContext);
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not authorized');
+        }
+
+        if(!$this->pingAmazeeAiBackend()) {
+            $this->error('Amazee AI backend is not healthy', $logContext);
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not healthy');
+        }
+
         $projectName = $appInstance->getKeyValue('lagoon-project-name');
         $region = $appInstance->getKeyValue('amazee-ai-backend-region-id');
         if(!$region) {
