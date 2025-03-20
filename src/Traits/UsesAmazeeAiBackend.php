@@ -142,13 +142,10 @@ trait UsesAmazeeAiBackend
                 $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
             }
         } catch (HttpException $e) {
-            $this->error(sprintf(
-                'HTTP Error %d: %s',
-                $logContext + [
-                    'status_code' => $e->getStatusCode(), 
-                    'response' => json_encode($e->getResponse(), JSON_PRETTY_PRINT)
-                ]
-            ));
+            $this->error('Error creating user in amazeeAI backend', $logContext + [
+                'status_code' => $e->getStatusCode(), 
+                'response' => json_encode($e->getResponse(), JSON_PRETTY_PRINT)
+            ]);
         }
 
         if(!$backendUser) {
