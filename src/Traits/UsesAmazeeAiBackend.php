@@ -149,6 +149,7 @@ trait UsesAmazeeAiBackend
             } else {
                 $this->info('No user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
                 $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6);
+                $this->info('Creating new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext + ['password' => $password]);
                 $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, $password);
                 $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext + $backendUser);
             }
