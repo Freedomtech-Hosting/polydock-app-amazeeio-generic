@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f117f6cd6d70e9da18ad279e1b568793",
+    "content-hash": "f8182d551d2ae9aac34c086ea457e300",
     "packages": [
         {
             "name": "freedomtech-hosting/ft-lagoon-php",
@@ -50,16 +50,16 @@
         },
         {
             "name": "freedomtech-hosting/polydock-amazeeai-backend-client-php",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freedomtech-Hosting/polydock-amazeeai-backend-client-php.git",
-                "reference": "52b8f74fc81d85e9c4a70d40486254ead27765b0"
+                "reference": "2e9d294824ca33f939e6ffbabbf60560a0938a7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-amazeeai-backend-client-php/zipball/52b8f74fc81d85e9c4a70d40486254ead27765b0",
-                "reference": "52b8f74fc81d85e9c4a70d40486254ead27765b0",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-amazeeai-backend-client-php/zipball/2e9d294824ca33f939e6ffbabbf60560a0938a7f",
+                "reference": "2e9d294824ca33f939e6ffbabbf60560a0938a7f",
                 "shasum": ""
             },
             "require": {
@@ -84,9 +84,9 @@
             "description": "The Freedom Tech amazee.ai Private AI PHP library",
             "support": {
                 "issues": "https://github.com/Freedomtech-Hosting/polydock-amazeeai-backend-client-php/issues",
-                "source": "https://github.com/Freedomtech-Hosting/polydock-amazeeai-backend-client-php/tree/v0.0.2"
+                "source": "https://github.com/Freedomtech-Hosting/polydock-amazeeai-backend-client-php/tree/v0.0.3"
             },
-            "time": "2025-03-20T22:25:34+00:00"
+            "time": "2025-03-20T22:56:17+00:00"
         },
         {
             "name": "freedomtech-hosting/polydock-app",
