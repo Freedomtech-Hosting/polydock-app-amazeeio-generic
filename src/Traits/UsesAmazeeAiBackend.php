@@ -39,8 +39,37 @@ trait UsesAmazeeAiBackend
         if(!($this->amazeeAiBackendClient instanceof Client)) {
             throw new PolydockAppInstanceStatusFlowException('Amazee AI backend client is not an instance of ' . Client::class);
         }
+
+        if(!$this->pingAmazeeAiBackend()) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not healthy');
+        }
+
+        if(!$this->checkAmazeeAiBackendAuth()) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not authorized');
+        }
     }
 
+    public function checkAmazeeAiBackendAuth(): bool
+    {
+        $logContext = $this->getLogContext(__FUNCTION__);
+
+        $this->info('Checking amazeeAI backend auth', $logContext);
+
+        $response = $this->amazeeAiBackendClient->getMe();
+        
+        if(! $response['is_admin']) {
+            $this->error('Amazee AI backend is not authorized as an admin', $logContext + $response);
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not authorized as an admin');
+        }
+
+        if(! $response['is_active']) {
+            $this->error('Amazee AI backend is not an active admin', $logContext + $response);
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend is not an active admin');
+        }
+        
+        $this->info('Amazee AI backend is authorized and active', $logContext + $response);
+        return true;
+    }
 
     public function pingAmazeeAiBackend(): bool
     {
