@@ -135,7 +135,7 @@ trait UsesAmazeeAiBackend
             $this->info('Using first user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
         } else {
             $this->info('No user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
-            $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid().uniqid());
+            $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid());
             $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
         }
 
