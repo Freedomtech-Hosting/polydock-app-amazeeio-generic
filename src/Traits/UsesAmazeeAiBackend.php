@@ -5,6 +5,7 @@ namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
 use FreedomtechHosting\PolydockAmazeeAIBackendClient\Client;
+use FreedomtechHosting\PolydockAmazeeAIBackendClient\Exception\HttpException;
 
 trait UsesAmazeeAiBackend
 {
@@ -129,14 +130,25 @@ trait UsesAmazeeAiBackend
         $backendUserList = $this->amazeeAiBackendClient->searchUsers($amazeeAiBackendUserEmail);
         $this->info('Found ' . count($backendUserList) . ' users in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
 
-        if(count($backendUserList) > 1) {
-            $this->info('Multiple users found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
-            $backendUser = $backendUserList[0];
-            $this->info('Using first user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
-        } else {
-            $this->info('No user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
-            $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid());
-            $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
+        $backendUser = null;
+        try {
+            if(count($backendUserList) > 1) {
+                $this->info('Multiple users found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
+                $backendUser = $backendUserList[0];
+                $this->info('Using first user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
+            } else {
+                $this->info('No user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
+                $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid());
+                $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
+            }
+        } catch (HttpException $e) {
+            $this->error(sprintf(
+                'HTTP Error %d: %s',
+                $logContext + [
+                    'status_code' => $e->getStatusCode(), 
+                    'response' => json_encode($e->getResponse(), JSON_PRETTY_PRINT)
+                ]
+            ));
         }
 
         if(!$backendUser) {
