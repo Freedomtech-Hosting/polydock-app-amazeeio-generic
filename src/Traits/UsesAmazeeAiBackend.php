@@ -2,10 +2,46 @@
 
 namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits;
 
+use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceStatusFlowException;
+use FreedomtechHosting\PolydockAmazeeAIBackendClient\Client;
+
 
 trait UsesAmazeeAiBackend
 {
+    /**
+     * Sets the lagoon client from the app instance.
+     * 
+     * @param PolydockAppInstanceInterface $appInstance The app instance to set the lagoon client from
+     * @return void
+     * @throws PolydockAppInstanceStatusFlowException If lagoon client is not found
+     */
+    public function setAmazeeAiBackendClientFromAppInstance(PolydockAppInstanceInterface $appInstance): void
+    {
+        $engine = $appInstance->getEngine();
+        $this->engine = $engine;
+
+        $amazeeAiBackendClientProvider = $engine->getPolydockServiceProviderSingletonInstance("PolydockServiceProviderAmazeeAiBackend");
+        $this->amazeeAiBackendClientProvider = $amazeeAiBackendClientProvider;
+
+        if (!method_exists($amazeeAiBackendClientProvider, 'getAmazeeAiBackendClient')) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend client provider does not have getAmazeeAiBackendClient method');
+        } else {
+            // TODO: Fix this, this is a hack to get around the fact that the lagoon client provider is not typed
+            /** @phpstan-ignore-next-line */
+            $this->amazeeAiBackendClient = $this->amazeeAiBackendClientProvider->getAmazeeAiBackendClient(); 
+        }
+
+        if(!$this->amazeeAiBackendClient) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend client not found');
+        }
+
+        if(!($this->amazeeAiBackendClient instanceof Client)) {
+            throw new PolydockAppInstanceStatusFlowException('Amazee AI backend client is not an instance of ' . Client::class);
+        }
+    }
+
+
     public function pingAmazeeAiBackend(): bool
     {
         $logContext = $this->getLogContext(__FUNCTION__);

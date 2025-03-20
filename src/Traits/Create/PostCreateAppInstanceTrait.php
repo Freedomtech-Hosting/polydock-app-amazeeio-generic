@@ -41,6 +41,11 @@ trait PostCreateAppInstanceTrait {
             $validateLagoonProjectId
         );
 
+        if($this->app->getRequiresAiInfrastructure()) {
+            // Throws PolydockAppInstanceStatusFlowException
+            $this->setAmazeeAiBackendClientFromAppInstance($appInstance);
+        }
+
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
 
         $this->info($functionName . ': starting for project: ' . $projectName, $logContext);
