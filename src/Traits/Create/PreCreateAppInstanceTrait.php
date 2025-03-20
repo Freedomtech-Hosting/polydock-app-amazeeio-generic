@@ -49,8 +49,6 @@ trait PreCreateAppInstanceTrait {
             PolydockAppInstanceStatus::PRE_CREATE_RUNNING->getStatusMessage()
         );
 
-        // TODO: Implement pre-create logic
-
         $this->info($functionName . ': completed', $logContext);
         $appInstance->setStatus(PolydockAppInstanceStatus::PRE_CREATE_COMPLETED, "Pre-create completed");
         return $appInstance;

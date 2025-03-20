@@ -59,6 +59,21 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_AUTHOR", $appInstance->getApp()->getAppAuthor(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_WEBSITE", $appInstance->getApp()->getAppWebsite(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_SUPPORT_EMAIL", $appInstance->getApp()->getAppSupportEmail(), "GLOBAL");
+
+
+        if($this->app->getRequiresAiInfrastructure()) {
+            $this->info($functionName . ': app requires AI infrastructure', $logContext);
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $appInstance->getKeyValue('amazee-ai-backend-region-id'), "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", "amazeeio-ai-demo.cluster-something.eu-central-2.rds.amazonaws.com", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", "db_something", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", "user_someone", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", "somepass", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOST_NAME", "litellm.amazeeai-something.amazeeio.something", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", "https://litellm.amazeeai-something.amazeeio.something", "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_TOKEN", "sk-somekeysomekey", "GLOBAL");
+
+        }
+
         } catch (\Exception $e) {
             $this->error($e->getMessage());
             $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() );

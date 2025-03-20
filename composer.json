@@ -17,6 +17,7 @@
     "minimum-stability": "stable",
     "require": {
         "freedomtech-hosting/polydock-app": "^0.0.18",
-        "freedomtech-hosting/ft-lagoon-php": "^0.0.3"
+        "freedomtech-hosting/ft-lagoon-php": "^0.0.3",
+        "freedomtech-hosting/polydock-amazeeai-backend-client-php": "^0.0.1"
     }
 }

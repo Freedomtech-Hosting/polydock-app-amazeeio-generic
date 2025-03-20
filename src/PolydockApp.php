@@ -58,6 +58,11 @@ class PolydockApp extends PolydockAppBase
     use PollHealthProgressAppInstanceTrait;
 
     /**
+     * @var bool
+     */
+    protected bool $requiresAiInfrastructure = false;
+
+    /**
      * @var string
      */
     public static string $version = '0.0.1';
@@ -376,5 +381,15 @@ class PolydockApp extends PolydockAppBase
         if($this->lagoonClient->getDebug()) {
             $this->debug('Added or updated variable', $logContext);
         }
+    }
+
+    public function getRequiresAiInfrastructure(): bool
+    {
+        return $this->requiresAiInfrastructure;
+    }
+
+    public function setRequiresAiInfrastructure(bool $requiresAiInfrastructure): void
+    {
+        $this->requiresAiInfrastructure = $requiresAiInfrastructure;
     }
 }
