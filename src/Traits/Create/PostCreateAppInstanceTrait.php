@@ -41,7 +41,7 @@ trait PostCreateAppInstanceTrait {
             $validateLagoonProjectId
         );
 
-        if($this->app->getRequiresAiInfrastructure()) {
+        if($this->getRequiresAiInfrastructure()) {
             // Throws PolydockAppInstanceStatusFlowException
             $this->setAmazeeAiBackendClientFromAppInstance($appInstance);
         }
