@@ -125,12 +125,18 @@ trait UsesAmazeeAiBackend
         $logContext['ai_backend_region'] = $region;
         $logContext['ai_backend_user_email'] = $amazeeAiBackendUserEmail;
         
+        $this->info('Searching for user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
         $backendUserList = $this->amazeeAiBackendClient->searchUsers($amazeeAiBackendUserEmail);
+        $this->info('Found ' . count($backendUserList) . ' users in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
 
         if(count($backendUserList) > 1) {
+            $this->info('Multiple users found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
             $backendUser = $backendUserList[0];
+            $this->info('Using first user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
         } else {
+            $this->info('No user found in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
             $backendUser = $this->amazeeAiBackendClient->createUser($amazeeAiBackendUserEmail, uniqid().uniqid());
+            $this->info('Created new user in amazeeAI backend for user email: ' . $amazeeAiBackendUserEmail, $logContext);
         }
 
         if(!$backendUser) {
