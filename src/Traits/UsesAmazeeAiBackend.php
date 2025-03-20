@@ -132,7 +132,6 @@ trait UsesAmazeeAiBackend
             $amazeeAiBackendUserEmail = $projectName . '@autogen.null';
         }
 
-
         $logContext['ai_backend_region'] = $region;
         $logContext['ai_backend_user_email'] = $amazeeAiBackendUserEmail;
         
