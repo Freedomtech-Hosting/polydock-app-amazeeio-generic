@@ -64,23 +64,25 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_AUTHOR", $appInstance->getApp()->getAppAuthor(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_WEBSITE", $appInstance->getApp()->getAppWebsite(), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_SUPPORT_EMAIL", $appInstance->getApp()->getAppSupportEmail(), "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_GENERATED_APP_ADMIN_USERNAME", $appInstance->getKeyValue("lagoon-generate-app-admin-username"), "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_GENERATED_APP_ADMIN_PASSWORD", $appInstance->getKeyValue("lagoon-generate-app-admin-password"), "GLOBAL");
 
-        if($this->getRequiresAiInfrastructure()) {
-            $privateAiCredentials = $this->getPrivateAICredentialsFromBackend($appInstance);
-            $llmApiUrl = $privateAiCredentials['litellm_api_url'];
-            $llmApiHostname = preg_replace('#^https?://|/.*$#', '', $llmApiUrl);
+            if($this->getRequiresAiInfrastructure()) {
+                $privateAiCredentials = $this->getPrivateAICredentialsFromBackend($appInstance);
+                $llmApiUrl = $privateAiCredentials['litellm_api_url'];
+                $llmApiHostname = preg_replace('#^https?://|/.*$#', '', $llmApiUrl);
 
-            $this->info($functionName . ': app requires AI infrastructure', $logContext);
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $privateAiCredentials['region'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", $privateAiCredentials['database_host'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", $privateAiCredentials['database_name'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", $privateAiCredentials['database_username'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", $privateAiCredentials['database_password'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", $privateAiCredentials['litellm_api_url'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOSTNAME", $llmApiHostname, "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOST_NAME", $privateAiCredentials['litellm_api_url'], "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_TOKEN", $privateAiCredentials['litellm_token'], "GLOBAL");
-        }
+                $this->info($functionName . ': app requires AI infrastructure', $logContext);
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_REGION", $privateAiCredentials['region'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_HOST_NAME", $privateAiCredentials['database_host'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", $privateAiCredentials['database_name'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", $privateAiCredentials['database_username'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", $privateAiCredentials['database_password'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", $privateAiCredentials['litellm_api_url'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOSTNAME", $llmApiHostname, "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOST_NAME", $privateAiCredentials['litellm_api_url'], "GLOBAL");
+                $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_TOKEN", $privateAiCredentials['litellm_token'], "GLOBAL");
+            }
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());
