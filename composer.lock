@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19c1320f431433c1c7ffe022a1136601",
+    "content-hash": "d2adeab1f9bf5bd401fb5098f7e1cf1d",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -814,16 +814,16 @@
         },
         {
             "name": "freedomtech-hosting/polydock-app",
-            "version": "v0.0.23",
+            "version": "v0.0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freedomtech-Hosting/polydock-app.git",
-                "reference": "02cab27368a88aa9870636e174f3fe47f00916ee"
+                "reference": "6d46309d89cccc17e8015699b30727e5ec72925e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-app/zipball/02cab27368a88aa9870636e174f3fe47f00916ee",
-                "reference": "02cab27368a88aa9870636e174f3fe47f00916ee",
+                "url": "https://api.github.com/repos/Freedomtech-Hosting/polydock-app/zipball/6d46309d89cccc17e8015699b30727e5ec72925e",
+                "reference": "6d46309d89cccc17e8015699b30727e5ec72925e",
                 "shasum": ""
             },
             "require": {
@@ -848,9 +848,9 @@
             "description": "Library for Polydock Apps",
             "support": {
                 "issues": "https://github.com/Freedomtech-Hosting/polydock-app/issues",
-                "source": "https://github.com/Freedomtech-Hosting/polydock-app/tree/v0.0.23"
+                "source": "https://github.com/Freedomtech-Hosting/polydock-app/tree/v0.0.24"
             },
-            "time": "2025-03-22T16:07:55+00:00"
+            "time": "2025-03-22T16:27:38+00:00"
         },
         {
             "name": "fruitcake/php-cors",
