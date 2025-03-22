@@ -182,6 +182,7 @@ class PolydockApp extends PolydockAppBase
         $lagoonOrganizationId = $appInstance->getKeyValue("lagoon-deploy-organization-id");
         $lagoonProjectPrefix = $appInstance->getKeyValue("lagoon-deploy-project-prefix");
         $lagoonProjectName = $appInstance->getKeyValue("lagoon-project-name");
+        $lagoonAppInstanceHealthWebhookUrl = $appInstance->getKeyValue("polydock-app-instance-health-webhook-url");
         $appType = $appInstance->getAppType();
         
         if(!$lagoonDeployGit) {
@@ -229,6 +230,13 @@ class PolydockApp extends PolydockAppBase
         if(!$lagoonProjectName) {
             if($this->lagoonClient->getDebug()) {
                 $this->debug('Lagoon project name value not set', $logContext);
+            }
+            return false;
+        }
+
+        if(!$lagoonAppInstanceHealthWebhookUrl) {
+            if($this->lagoonClient->getDebug()) {
+                $this->debug('Lagoon app instance health webhook url value not set', $logContext);
             }
             return false;
         }
