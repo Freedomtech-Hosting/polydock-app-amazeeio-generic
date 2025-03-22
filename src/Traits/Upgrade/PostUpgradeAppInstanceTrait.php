@@ -47,7 +47,7 @@ trait PostUpgradeAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::POST_UPGRADE_RUNNING, 
             PolydockAppInstanceStatus::POST_UPGRADE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         $appInstance->warning("TODO: Implement post-upgrade logic", $logContext);
         try {
@@ -55,12 +55,12 @@ trait PostUpgradeAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_UPGRADED_TIME", date('H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_FAILED, $e->getMessage() )->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_COMPLETED, "Post-upgrade completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::POST_UPGRADE_COMPLETED, "Post-upgrade completed")->save();
         return $appInstance;
     }
 }

@@ -50,7 +50,7 @@ trait RemoveAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::REMOVE_RUNNING, 
             PolydockAppInstanceStatus::REMOVE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         $removedEnvironment = $this->lagoonClient->deleteProjectEnvironmentByName(
             $projectName, 
@@ -59,19 +59,19 @@ trait RemoveAppInstanceTrait {
 
         if (isset($removedEnvironment['error'])) {
             $this->error($removedEnvironment['error'][0]['message']);
-            $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_FAILED, "Failed to remove Lagoon environment", $logContext + ['error' => $removedEnvironment['error']]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_FAILED, "Failed to remove Lagoon environment", $logContext + ['error' => $removedEnvironment['error']])->save();
             return $appInstance;
         }
 
         if (isset($removedEnvironment['deleteEnvironment']) && $removedEnvironment['deleteEnvironment'] === 'success') {
             $this->info("Environment deleted successfully", $logContext + ['removedEnvironment' => $removedEnvironment]);
         } else {
-            $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_FAILED, "No error, but failed to remove Lagoon environment", $logContext + ['error' => $removedEnvironment['error']]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_FAILED, "No error, but failed to remove Lagoon environment", $logContext + ['error' => $removedEnvironment['error']])->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_COMPLETED, "Remove completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::REMOVE_COMPLETED, "Remove completed")->save();
         return $appInstance;
     }
 }

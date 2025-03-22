@@ -47,7 +47,7 @@ trait CreateAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::CREATE_RUNNING, 
             PolydockAppInstanceStatus::CREATE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         $addOrgOwnerToProject = true;
         $createdProjectData = $this->lagoonClient->createLagoonProjectInOrganization(
@@ -63,19 +63,19 @@ trait CreateAppInstanceTrait {
 
         if (isset($createdProjectData['error'])) {
             $this->error($createdProjectData['error'][0]['message'], $logContext);
-            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => $createdProjectData['error']]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => $createdProjectData['error']])->save();
             return $appInstance;
         }
 
         if(!isset($createdProjectData['addProject']['id'])) {
-            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => "Missing project id"]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => "Missing project id"])->save();
             return $appInstance;
         }
 
         $appInstance->storeKeyValue("lagoon-project-id", $createdProjectData['addProject']['id']);
 
         $this->info($functionName . ': completed', $logContext + ['projectId' => $createdProjectData['addProject']['id']]);
-        $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_COMPLETED, "Create completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_COMPLETED, "Create completed")->save();
         return $appInstance;
     }
 }

@@ -48,12 +48,12 @@ trait PreDeployAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::PRE_DEPLOY_RUNNING, 
             PolydockAppInstanceStatus::PRE_DEPLOY_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         // There is nothing to do here beyond checking the name and ID above
         
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_DEPLOY_COMPLETED, "Pre-deploy completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_DEPLOY_COMPLETED, "Pre-deploy completed")->save();
         return $appInstance;
     }
 }

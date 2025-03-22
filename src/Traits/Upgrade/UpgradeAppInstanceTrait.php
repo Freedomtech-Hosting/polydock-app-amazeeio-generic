@@ -60,12 +60,12 @@ trait UpgradeAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_SUPPORT_EMAIL", $appInstance->getApp()->getAppSupportEmail(), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_FAILED, $e->getMessage() )->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_RUNNING, "Upgrade completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::UPGRADE_RUNNING, "Upgrade completed")->save();
         return $appInstance;
     }
 }

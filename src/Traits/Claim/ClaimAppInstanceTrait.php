@@ -1,25 +1,25 @@
 <?php
 
-namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Deploy;
+namespace FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Claim;
 
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 
-trait PostDeployAppInstanceTrait {
+trait ClaimAppInstanceTrait {
 
  /**
-     * Handles post-deployment tasks for an app instance.
+     * Handles upgrade tasks for an app instance.
      * 
-     * This method is called after deploying the app instance. It validates the instance
-     * is in the correct status, sets it to running, executes post-deployment logic,
+     * This method is to upgrade the app instance. It validates the instance
+     * is in the correct status, sets it to running, executes upgrade logic,
      * and marks it as completed.
      *
      * @param PolydockAppInstanceInterface $appInstance The app instance to process
      * @return PolydockAppInstanceInterface The processed app instance
-     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_POST_DEPLOY status
+     * @throws PolydockAppInstanceStatusFlowException If instance is not in PENDING_UPGRADE status
      * @throws PolydockEngineProcessPolydockAppInstanceException If the process fails
      */
-    public function postDeployAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface 
+    public function claimAppInstance(PolydockAppInstanceInterface $appInstance): PolydockAppInstanceInterface 
     {
         $functionName = __FUNCTION__;
         $logContext = $this->getLogContext($functionName);
@@ -33,7 +33,7 @@ trait PostDeployAppInstanceTrait {
         // Throws PolydockAppInstanceStatusFlowException
         $this->validateAppInstanceStatusIsExpectedAndConfigureLagoonClientAndVerifyLagoonValues(
             $appInstance,
-            PolydockAppInstanceStatus::PENDING_POST_DEPLOY, 
+            PolydockAppInstanceStatus::PENDING_POLYDOCK_CLAIM,
             $logContext,
             $testLagoonPing,
             $validateLagoonValues,
@@ -43,24 +43,24 @@ trait PostDeployAppInstanceTrait {
 
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
 
-        $this->info($functionName . ': starting for project: ' . $projectName, $logContext);
+        $this->info($functionName . ': starting claim of project: ' . $projectName, $logContext);
         $appInstance->setStatus(
-            PolydockAppInstanceStatus::POST_DEPLOY_RUNNING, 
-            PolydockAppInstanceStatus::POST_DEPLOY_RUNNING->getStatusMessage()
+            PolydockAppInstanceStatus::POLYDOCK_CLAIM_RUNNING, 
+            PolydockAppInstanceStatus::POLYDOCK_CLAIM_RUNNING->getStatusMessage()
         )->save();
 
-        $appInstance->warning("TODO: Implement post-deploy logic", $logContext);
+        $appInstance->warning("TODO: Implement claim logic", $logContext);
+
         try {
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_DATE", date('Y-m-d'), "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_CLAIMED_AT", date('Y-m-d H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, $e->getMessage() )->save();
+            $appInstance->setStatus(PolydockAppInstanceStatus::POLYDOCK_CLAIM_FAILED, $e->getMessage() )->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_COMPLETED, "Post-deploy completed")->save();
+        $appInstance->setStatus(PolydockAppInstanceStatus::POLYDOCK_CLAIM_COMPLETED, "Claim completed")->save();
         return $appInstance;
     }
 }

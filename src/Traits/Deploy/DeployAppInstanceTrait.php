@@ -50,7 +50,7 @@ trait DeployAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::DEPLOY_RUNNING, 
             PolydockAppInstanceStatus::DEPLOY_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         $createdDeployment = $this->lagoonClient->deployProjectEnvironmentByName(
             $projectName, 
@@ -59,21 +59,21 @@ trait DeployAppInstanceTrait {
 
         if (isset($createdDeployment['error'])) {
             $this->error($createdDeployment['error'][0]['message'], $logContext);
-            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => $createdDeployment['error']]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_FAILED, "Failed to create Lagoon project", $logContext + ['error' => $createdDeployment['error']])->save();
             return $appInstance;
         }
 
         $latestDeploymentName = $createdDeployment['deployEnvironmentBranch'] ?? null;
 
         if(empty($latestDeploymentName)) {
-            $appInstance->setStatus(PolydockAppInstanceStatus::CREATE_FAILED, "Failed to create Lagoon project", $logContext + ['error' => "Missing deployment name"]);
+            $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_FAILED, "Failed to create Lagoon project", $logContext + ['error' => "Missing deployment name"])->save();
             return $appInstance;
         }
 
         $appInstance->storeKeyValue("lagoon-latest-deployment-name", $latestDeploymentName);
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_RUNNING, "Deploy running");
+        $appInstance->setStatus(PolydockAppInstanceStatus::DEPLOY_RUNNING, "Deploy running")->save();
         return $appInstance;
     }
 }

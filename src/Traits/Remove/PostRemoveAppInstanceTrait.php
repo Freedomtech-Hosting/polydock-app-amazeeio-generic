@@ -47,19 +47,19 @@ trait PostRemoveAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::POST_REMOVE_RUNNING, 
             PolydockAppInstanceStatus::POST_REMOVE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_REMOVED_DATE", date('Y-m-d'), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_REMOVED_TIME", date('H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_REMOVE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_REMOVE_FAILED, $e->getMessage() )->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::POST_REMOVE_COMPLETED, "Post-remove completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::POST_REMOVE_COMPLETED, "Post-remove completed")->save();
         return $appInstance;
     }
 }

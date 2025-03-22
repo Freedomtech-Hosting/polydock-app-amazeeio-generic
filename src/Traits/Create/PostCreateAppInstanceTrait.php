@@ -52,7 +52,7 @@ trait PostCreateAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::POST_CREATE_RUNNING, 
             PolydockAppInstanceStatus::POST_CREATE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_CREATED_DATE", date('Y-m-d'), "GLOBAL");
@@ -87,12 +87,12 @@ trait PostCreateAppInstanceTrait {
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() );
+            $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_FAILED, $e->getMessage() )->save();
             return $appInstance;
         }
 
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_COMPLETED, "Post-create completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::POST_CREATE_COMPLETED, "Post-create completed")->save();
         return $appInstance;
     }
 }

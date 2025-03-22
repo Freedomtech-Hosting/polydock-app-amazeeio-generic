@@ -48,12 +48,12 @@ trait PreUpgradeAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::PRE_UPGRADE_RUNNING, 
             PolydockAppInstanceStatus::PRE_UPGRADE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         // There is nothing to do here beyond checking the name and ID above
         
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_COMPLETED, "Pre-upgrade completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_UPGRADE_COMPLETED, "Pre-upgrade completed")->save();
         return $appInstance;
     }
 }

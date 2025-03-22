@@ -48,12 +48,12 @@ trait PreRemoveAppInstanceTrait {
         $appInstance->setStatus(
             PolydockAppInstanceStatus::PRE_REMOVE_RUNNING, 
             PolydockAppInstanceStatus::PRE_REMOVE_RUNNING->getStatusMessage()
-        );
+        )->save();
 
         // There is nothing to do here beyond checking the name and ID above
         
         $this->info($functionName . ': completed', $logContext);
-        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_REMOVE_COMPLETED, "Pre-remove completed");
+        $appInstance->setStatus(PolydockAppInstanceStatus::PRE_REMOVE_COMPLETED, "Pre-remove completed")->save();
         return $appInstance;
     }
 }

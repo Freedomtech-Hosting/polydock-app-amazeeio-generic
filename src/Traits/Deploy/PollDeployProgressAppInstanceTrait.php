@@ -123,7 +123,7 @@ trait PollDeployProgressAppInstanceTrait {
             $appInstance->setStatus(
                 $possibleDeploymentStatusesToPolydockAppInstanceStatus[$deploymentStatus], 
                     "Deploy is " . $deploymentStatus
-            );
+            )->save();
         }
 
         $appInstance->info($functionName . " - deploy status successfully polled and updated", $logContext);
