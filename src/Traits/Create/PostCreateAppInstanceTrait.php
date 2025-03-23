@@ -67,7 +67,7 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_GENERATED_APP_ADMIN_USERNAME", $appInstance->getKeyValue("lagoon-generate-app-admin-username"), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_GENERATED_APP_ADMIN_PASSWORD", $appInstance->getKeyValue("lagoon-generate-app-admin-password"), "GLOBAL");
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_INSTANCE_HEALTH_WEBHOOK_URL", $appInstance->getKeyValue("polydock-app-instance-health-webhook-url"), "GLOBAL");
-
+            $this->addOrUpdateLagoonProjectVariable($appInstance, "LAGOON_FEATURE_FLAG_INSIGHTS", false, "GLOBAL");
             if($this->getRequiresAiInfrastructure()) {
                 $privateAiCredentials = $this->getPrivateAICredentialsFromBackend($appInstance);
                 $llmApiUrl = $privateAiCredentials['litellm_api_url'];

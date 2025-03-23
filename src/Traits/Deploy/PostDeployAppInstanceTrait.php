@@ -42,6 +42,7 @@ trait PostDeployAppInstanceTrait {
         );
 
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
+        $deployEnvironment = $appInstance->getKeyValue("lagoon-deploy-branch");
 
         $this->info($functionName . ': starting for project: ' . $projectName, $logContext);
         $appInstance->setStatus(
@@ -49,15 +50,34 @@ trait PostDeployAppInstanceTrait {
             PolydockAppInstanceStatus::POST_DEPLOY_RUNNING->getStatusMessage()
         )->save();
 
-        $appInstance->warning("TODO: Implement post-deploy logic", $logContext);
-        try {
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_DATE", date('Y-m-d'), "GLOBAL");
-            $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, $e->getMessage() )->save();
-            return $appInstance;
+        $postDeployScript = $appInstance->getKeyValue("lagoon-post-deploy-script");
+        if(! empty($postDeployScript)) {
+            $this->info("Post-deploy script", $logContext + ['postDeployScript' => $postDeployScript]);
+
+            try {
+                $trialResult = $this->lagoonClient->executeCommandOnProjectEnvironment(
+                    $projectName, 
+                    $deployEnvironment,
+                    "echo 'Hello, world!'"
+                );
+
+                $this->info("Trial Result", $logContext + ['trialResult' => $trialResult]);
+
+                if($trialResult['result'] !== 0) {
+                    throw new \Exception("Failed to execute command on project environment: " . $trialResult['result'] . " | " . $trialResult['result_text'] . " | " . $trialResult['error']);
+                }
+
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
+                $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, $e->getMessage() )->save();
+                return $appInstance;
+            }
+        } else {
+            $this->info("No post-deploy script detected", $logContext);
         }
+
+        $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_DATE", date('Y-m-d'), "GLOBAL");
+        $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_APP_LAST_DEPLOYED_TIME", date('H:i:s'), "GLOBAL");
 
         $this->info($functionName . ': completed', $logContext);
         $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_COMPLETED, "Post-deploy completed")->save();
