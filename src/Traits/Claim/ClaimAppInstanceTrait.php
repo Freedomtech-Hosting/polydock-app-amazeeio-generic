@@ -49,9 +49,9 @@ trait ClaimAppInstanceTrait {
             PolydockAppInstanceStatus::POLYDOCK_CLAIM_RUNNING->getStatusMessage()
         )->save();
 
-        $appInstance->warning("TODO: Implement claim logic", $logContext);
-
         try {
+            $appInstance->storeKeyValue("claim-command-output", "https://example.com/user/login?something=cool");
+
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_CLAIMED_AT", date('Y-m-d H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
