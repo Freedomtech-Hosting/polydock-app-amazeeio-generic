@@ -57,6 +57,9 @@ class PolydockApp extends PolydockAppBase
     // Health
     use PollHealthProgressAppInstanceTrait;
 
+    // Claim
+    use ClaimAppInstanceTrait
+
     /**
      * @var bool
      */
