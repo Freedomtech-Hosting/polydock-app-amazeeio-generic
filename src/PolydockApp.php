@@ -22,6 +22,8 @@ use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Upgrade\PollUpgradeProg
 
 use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Health\PollHealthProgressAppInstanceTrait;
 
+use FreedomtechHosting\PolydockAppAmazeeioGeneric\Traits\Claim\ClaimAppInstanceTrait;
+
 use FreedomtechHosting\PolydockApp\PolydockAppBase;
 use FreedomtechHosting\PolydockApp\PolydockAppInstanceInterface;
 use FreedomtechHosting\PolydockApp\Enums\PolydockAppInstanceStatus;
@@ -58,7 +60,7 @@ class PolydockApp extends PolydockAppBase
     use PollHealthProgressAppInstanceTrait;
 
     // Claim
-    use ClaimAppInstanceTrait
+    use ClaimAppInstanceTrait;
 
     /**
      * @var bool
