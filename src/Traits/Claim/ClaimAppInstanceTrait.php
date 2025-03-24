@@ -74,7 +74,7 @@ trait ClaimAppInstanceTrait {
                     throw new \Exception("No output from claim command: " . $claimResult['result'] . " | " . $claimResult['result_text'] . " | " . $claimResult['error']);
                 }
 
-                $appInstance->storeKeyValue("claim-command-output", $claimResult['output']);
+                $appInstance->storeKeyValue("claim-command-output", trim($claimResult['output']));
 
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
