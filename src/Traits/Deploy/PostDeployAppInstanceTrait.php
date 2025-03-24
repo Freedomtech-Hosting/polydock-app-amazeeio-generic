@@ -58,7 +58,7 @@ trait PostDeployAppInstanceTrait {
                 $trialResult = $this->lagoonClient->executeCommandOnProjectEnvironment(
                     $projectName, 
                     $deployEnvironment,
-                    "echo 'Hello, world!'"
+                    $postDeployScript
                 );
 
                 $this->info("Trial Result", $logContext + ['trialResult' => $trialResult]);
