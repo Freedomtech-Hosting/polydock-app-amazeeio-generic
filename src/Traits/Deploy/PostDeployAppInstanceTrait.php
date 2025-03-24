@@ -43,6 +43,7 @@ trait PostDeployAppInstanceTrait {
 
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
         $deployEnvironment = $appInstance->getKeyValue("lagoon-deploy-branch");
+        $logContext = $logContext + ['projectName' => $projectName, 'deployEnvironment' => $deployEnvironment];
 
         $this->info($functionName . ': starting for project: ' . $projectName, $logContext);
         $appInstance->setStatus(

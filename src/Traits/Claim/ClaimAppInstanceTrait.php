@@ -42,6 +42,8 @@ trait ClaimAppInstanceTrait {
         );
 
         $projectName = $appInstance->getKeyValue("lagoon-project-name");
+        $deployEnvironment = $appInstance->getKeyValue("lagoon-deploy-branch");
+        $logContext = $logContext + ['projectName' => $projectName, 'deployEnvironment' => $deployEnvironment];
 
         $this->info($functionName . ': starting claim of project: ' . $projectName, $logContext);
         $appInstance->setStatus(
@@ -49,13 +51,46 @@ trait ClaimAppInstanceTrait {
             PolydockAppInstanceStatus::POLYDOCK_CLAIM_RUNNING->getStatusMessage()
         )->save();
 
-        try {
-            $appInstance->storeKeyValue("claim-command-output", "https://example.com/user/login?something=cool");
+        $claimScript = $appInstance->getKeyValue("lagoon-claim-script");
+        $logContext = $logContext + ['claimScript' => $claimScript];
 
+        if(! empty($claimScript)) {
+            $this->info("Claim script", $logContext);
+
+            try {
+                $claimResult = $this->lagoonClient->executeCommandOnProjectEnvironment(
+                    $projectName, 
+                    $deployEnvironment,
+                    $claimScript
+                );
+
+                $this->info("Claim result", $logContext + ['claimResult' => $claimResult]);
+
+                if($claimResult['result'] !== 0) {
+                    throw new \Exception($claimResult['result'] . " | " . $claimResult['result_text'] . " | " . $claimResult['error']);
+                }
+
+                if(!isset($claimResult['output'])) {
+                    throw new \Exception("No output from claim command: " . $claimResult['result'] . " | " . $claimResult['result_text'] . " | " . $claimResult['error']);
+                }
+
+                $appInstance->storeKeyValue("claim-command-output", $claimResult['output']);
+
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
+                $appInstance->setStatus(PolydockAppInstanceStatus::POLYDOCK_CLAIM_FAILED, substr($e->getMessage(), 0, 100) )->save();
+                return $appInstance;
+            }
+        } else {
+            $this->info("No claim script detected", $logContext);
+        }
+
+        // We run this etiher way to ensure the variable is set
+        try {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "POLYDOCK_CLAIMED_AT", date('Y-m-d H:i:s'), "GLOBAL");
         } catch (\Exception $e) {
             $this->error($e->getMessage());
-            $appInstance->setStatus(PolydockAppInstanceStatus::POLYDOCK_CLAIM_FAILED, $e->getMessage() )->save();
+            $appInstance->setStatus(PolydockAppInstanceStatus::POLYDOCK_CLAIM_FAILED, substr($e->getMessage(), 0, 100) )->save();
             return $appInstance;
         }
 
