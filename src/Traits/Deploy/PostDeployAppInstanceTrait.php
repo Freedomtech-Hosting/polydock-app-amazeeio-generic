@@ -61,15 +61,15 @@ trait PostDeployAppInstanceTrait {
                     $postDeployScript
                 );
 
-                $this->info("Trial Result", $logContext + ['trialResult' => $trialResult]);
+                $this->info("Trial result", $logContext + ['trialResult' => $trialResult]);
 
                 if($trialResult['result'] !== 0) {
-                    throw new \Exception("Failed to execute command on project environment: " . $trialResult['result'] . " | " . $trialResult['result_text'] . " | " . $trialResult['error']);
+                    throw new \Exception($trialResult['result'] . " | " . $trialResult['result_text'] . " | " . $trialResult['error']);
                 }
 
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
-                $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, $e->getMessage() )->save();
+                $appInstance->setStatus(PolydockAppInstanceStatus::POST_DEPLOY_FAILED, substr($e->getMessage(), 0, 100) )->save();
                 return $appInstance;
             }
         } else {
