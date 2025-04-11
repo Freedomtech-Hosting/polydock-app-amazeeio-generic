@@ -52,7 +52,11 @@ trait ClaimAppInstanceTrait {
         )->save();
 
         $claimScript = $appInstance->getKeyValue("lagoon-claim-script");
-        $logContext = $logContext + ['claimScript' => $claimScript];
+        
+        $claimScriptService = $appInstance->getKeyValue("lagoon-claim-script-service") ?? "cli";
+        $claimScriptContainer = $appInstance->getKeyValue("lagoon-claim-script-container") ?? "cli";
+
+        $logContext = $logContext + ['claimScript' => $claimScript, 'claimScriptService' => $claimScriptService, 'claimScriptContainer' => $claimScriptContainer];
 
         if(! empty($claimScript)) {
             $this->info("Claim script", $logContext);
@@ -61,7 +65,9 @@ trait ClaimAppInstanceTrait {
                 $claimResult = $this->lagoonClient->executeCommandOnProjectEnvironment(
                     $projectName, 
                     $deployEnvironment,
-                    $claimScript
+                    $claimScript,
+                    $claimScriptService,
+                    $claimScriptContainer
                 );
 
                 $this->info("Claim result", $logContext + ['claimResult' => $claimResult]);

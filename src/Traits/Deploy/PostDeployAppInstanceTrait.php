@@ -52,6 +52,10 @@ trait PostDeployAppInstanceTrait {
         )->save();
 
         $postDeployScript = $appInstance->getKeyValue("lagoon-post-deploy-script");
+        $postDeployScriptService = $appInstance->getKeyValue("lagoon-post-deploy-script-service") ?? "cli";
+        $postDeployScriptContainer = $appInstance->getKeyValue("lagoon-post-deploy-script-container") ?? "cli";
+        $logContext = $logContext + ['postDeployScript' => $postDeployScript, 'postDeployScriptService' => $postDeployScriptService, 'postDeployScriptContainer' => $postDeployScriptContainer];
+
         if(! empty($postDeployScript)) {
             $this->info("Post-deploy script", $logContext + ['postDeployScript' => $postDeployScript]);
 
@@ -59,7 +63,9 @@ trait PostDeployAppInstanceTrait {
                 $trialResult = $this->lagoonClient->executeCommandOnProjectEnvironment(
                     $projectName, 
                     $deployEnvironment,
-                    $postDeployScript
+                    $postDeployScript,
+                    $postDeployScriptService,
+                    $postDeployScriptContainer
                 );
 
                 $this->info("Trial result", $logContext + ['trialResult' => $trialResult]);
