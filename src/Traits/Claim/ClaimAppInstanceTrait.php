@@ -73,8 +73,13 @@ trait ClaimAppInstanceTrait {
                 if(!isset($claimResult['output'])) {
                     throw new \Exception("No output from claim command: " . $claimResult['result'] . " | " . $claimResult['result_text'] . " | " . $claimResult['error']);
                 }
-
+                
+                if (!filter_var(trim($claimResult['output']), FILTER_VALIDATE_URL)) {
+                    throw new \Exception("Claim command output is not a valid URL: " . $claimResult['output']);
+                }
+    
                 $appInstance->storeKeyValue("claim-command-output", trim($claimResult['output']));
+                $appInstance->setAppUrl($claimResult['output'], $claimResult['output'], 24);
 
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
