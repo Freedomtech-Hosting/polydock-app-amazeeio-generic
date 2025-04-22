@@ -102,6 +102,7 @@ class PolydockApp extends PolydockAppBase
             new PolydockAppVariableDefinitionBase('lagoon-deploy-organization-id'),
             new PolydockAppVariableDefinitionBase('lagoon-deploy-project-prefix'),
             new PolydockAppVariableDefinitionBase('lagoon-project-name'),
+            new PolydockAppVariableDefinitionBase('lagoon-deploy-group-name'),
         ];
     }
 
@@ -185,6 +186,7 @@ class PolydockApp extends PolydockAppBase
         $lagoonRegionId = $appInstance->getKeyValue("lagoon-deploy-region-id");
         $lagoonPrivateKey = $appInstance->getKeyValue("lagoon-deploy-private-key");
         $lagoonOrganizationId = $appInstance->getKeyValue("lagoon-deploy-organization-id");
+        $lagoonGroupName = $appInstance->getKeyValue("lagoon-deploy-group-name");
         $lagoonProjectPrefix = $appInstance->getKeyValue("lagoon-deploy-project-prefix");
         $lagoonProjectName = $appInstance->getKeyValue("lagoon-project-name");
         $lagoonAppInstanceHealthWebhookUrl = $appInstance->getKeyValue("polydock-app-instance-health-webhook-url");
@@ -214,6 +216,13 @@ class PolydockApp extends PolydockAppBase
         if(!$lagoonOrganizationId) {
             if($this->lagoonClient->getDebug()) {
                 $this->debug('Lagoon organization id value not set', $logContext);
+            }
+            return false;
+        }
+
+        if(!$lagoonGroupName) {
+            if($this->lagoonClient->getDebug()) {
+                $this->debug('Lagoon group name value not set', $logContext);
             }
             return false;
         }
