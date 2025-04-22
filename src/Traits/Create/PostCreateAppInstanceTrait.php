@@ -57,8 +57,8 @@ trait PostCreateAppInstanceTrait {
         try {
 
             $addGroupToProjectResult = $this->lagoonClient->addGroupToProject(
-                $projectName,
-                $appInstance->getKeyValue("lagoon-deploy-group-name")
+                $appInstance->getKeyValue("lagoon-deploy-group-name"),
+                $projectName
             );
 
             if (isset($addGroupToProjectResult['error'])) {
