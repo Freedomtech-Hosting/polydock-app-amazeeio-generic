@@ -86,6 +86,7 @@ trait PostCreateAppInstanceTrait {
             $this->addOrUpdateLagoonProjectVariable($appInstance, "LAGOON_FEATURE_FLAG_INSIGHTS", "false", "GLOBAL");
             
             if($this->getRequiresAiInfrastructure()) {
+		sleep(2);
                 $privateAiCredentials = $this->getPrivateAICredentialsFromBackend($appInstance);
                 $llmApiUrl = $privateAiCredentials['litellm_api_url'];
                 $llmApiHostname = preg_replace('#^https?://|/.*$#', '', $llmApiUrl);
@@ -99,6 +100,8 @@ trait PostCreateAppInstanceTrait {
                 $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_NAME", $privateAiCredentials['database_name'], "GLOBAL");
                 $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_USERNAME", $privateAiCredentials['database_username'], "GLOBAL");
                 $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_DB_PASSWORD", $privateAiCredentials['database_password'], "GLOBAL");
+		sleep(4);
+
 		$this->info($functionName . ': Injecting AI LLM Credentials', $logContext);
                 $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_URL", $privateAiCredentials['litellm_api_url'], "GLOBAL");
                 $this->addOrUpdateLagoonProjectVariable($appInstance, "AI_LLM_API_HOSTNAME", $llmApiHostname, "GLOBAL");
